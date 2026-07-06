@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Executive Career & Innovation Portfolio</title>
+
+<style>
+#menuButton{
+
+position:absolute;
+
+top:15px;
+
+right:15px;
+
+background:#ffffff;
+
+padding:10px 16px;
+
+border-radius:8px;
+
+font-size:20px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+z-index:1000;
+
+}
+
+#menu{
+
+display:none;
+
+position:absolute;
+
+top:60px;
+
+right:15px;
+
+background:white;
+
+border-radius:10px;
+
+box-shadow:0 0 10px rgba(0,0,0,0.4);
+
+width:220px;
+
+z-index:1000;
+
+}
+
+#menu div{
+
+padding:14px;
+
+cursor:pointer;
+
+border-bottom:1px solid #ddd;
+
+font-size:18px;
+
+}
+
+#menu div:hover{
+
+background:#eeeeee;
+
+}
+
+body{
+    margin:0;
+    background:black;
+    overflow:hidden;
+    font-family:Arial;
+}
+
+#slide{
+    width:100vw;
+    height:100vh;
+    object-fit:contain;
+    transition:opacity 0.8s;
+}
+
+button{
+position:absolute;
+bottom:20px;
+padding:16px 28px;
+font-size:22px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+background:#ffffff;
+opacity:0.9;
+}
+
+#prev{
+
+left:20px;
+
+}
+
+#next{
+
+right:20px;
+
+}
+
+#counter{
+
+position:absolute;
+top:15px;
+right:20px;
+color:white;
+font-size:22px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+<!-- Hamburger Menu -->
+
+<div id="menuButton">☰ MENU</div>
+
+<div id="menu">
+
+<div onclick="gotoSlide(0)">Executive Career</div>
+
+<div onclick="gotoSlide(6)">Academics & personal details</div>
+
+
+<div onclick="gotoSlide(7)">Innovations -Automotive </div>
+
+<div onclick="gotoSlide(11)"> Innovations Beyond Automobile</div>
+
+
+
+</div>
+
+
+
+<img id="slide">
+
+<div id="counter"></div>
+
+<button id="prev">◀ Previous</button>
+
+<button id="next">Next ▶</button>
+
+<script>
+
+const totalSlides=70;
+
+const slides=[];
+const menu=document.getElementById("menu");
+
+document.getElementById("menuButton").onclick=function(){
+
+if(menu.style.display==="block")
+menu.style.display="none";
+else
+menu.style.display="block";
+
+}
+
+function gotoSlide(n){
+
+current=n;
+
+showSlide();
+
+menu.style.display="none";
+
+}
+
+for(let i=1;i<=totalSlides;i++){
+
+slides.push(i + ".jpg");
+
+}
+
+let current=0;
+
+let timer;
+
+function getDuration(page){
+
+// First 6 pages = 2 minutes
+
+if(page<6)
+
+return 120000;
+
+// Pages 7-14 = 60 sec
+
+if(page<14)
+
+return 60000;
+// Page 15 = 06 sec
+
+if(page<15)
+
+return 6000;
+// Pages 16-17 = 01 sec
+
+if(page<17)
+
+return 1000;
+// Pages 18 = 05 sec
+
+if(page<18)
+
+return 5000;
+// Page 19 = 01 sec
+
+if(page<19)
+
+return 1000;
+// Page 20 = 07 sec
+
+if(page<20)
+
+return 7000;
+
+// Page 21 = 55 sec
+
+if(page<21)
+
+return 55000;
+// Page 22 = 5 sec
+
+if(page<22)
+
+return 5000;
+// Pages 23-52 = 0.75 sec
+
+if(page<52)
+
+return 750;
+// Pages 53-61 = 2 minutes
+
+if(page<61)
+
+return 120000;
+// Pages 62-64 = 15 sec
+
+if(page<64)
+
+return 15000;
+// Pages 65-66 = 20 sec
+
+if(page<66)
+
+return 20000;
+// Pages 67-68 = 10 sec
+
+if(page<68)
+
+return 10000;
+// Pages 69-70 = 25 sec
+
+if(page<70)
+
+return 25000;
+
+
+}
+
+function showSlide(){
+
+const img = document.getElementById("slide");
+
+img.onerror = function() {
+alert("Image not found: " + slides[current]);
+};
+
+img.src = slides[current];
+document.getElementById("counter").innerHTML=(current+1)+" / "+totalSlides;
+
+document.getElementById("prev").style.display=(current==0)?"none":"block";
+
+document.getElementById("next").style.display=(current==totalSlides-1)?"none":"block";
+
+clearTimeout(timer);
+
+if(current<totalSlides-1){
+
+timer=setTimeout(nextSlide,getDuration(current));
+
+}
+
+}
+
+function nextSlide(){
+
+if(current<totalSlides-1){
+
+current++;
+
+showSlide();
+
+}
+
+}
+
+function prevSlide(){
+
+if(current>0){
+
+current--;
+
+showSlide();
+
+}
+
+}
+
+document.getElementById("next").onclick=nextSlide;
+
+document.getElementById("prev").onclick=prevSlide;
+
+showSlide();
+
+</script>
+
+</body>
+</html>
